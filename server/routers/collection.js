@@ -3,11 +3,14 @@
  * @example /linkmark/insertBookMark
  */
 import Router from 'koa-router';
-import CollectionController from '../controllers/collection'
-const router = Router();
+import CollectionController from '../controllers/collection';
 
-router.post('/insertBookMark', CollectionController.insert)
-router.post('/queryBookMark', CollectionController.queryList)
-router.get('/getData', CollectionController.getData)
+const CollectionRouter = new Router();
 
-export default router
+CollectionRouter.prefix('/collection');
+
+CollectionRouter.post('/insertBookMark', CollectionController.insert);
+CollectionRouter.post('/queryBookMark', CollectionController.queryList);
+CollectionRouter.get('/getData', CollectionController.getData);
+
+export default CollectionRouter;

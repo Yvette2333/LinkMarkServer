@@ -1,29 +1,31 @@
-/**
- *  @description 连接数据库并且对连接进行了优化 - ./module/db
- *  @description 此项目中使用了热重启nodemon 并修改了pageage.json 使用 npm start 启动项目即可
- *  @description ejs模版相关语法查看https://www.npmjs.com/package/ejs
- */
 import Koa from 'koa';
-import cors from 'koa-cors';
-import bodyparser from 'koa-bodyparser';
 import mongoose from 'mongoose';
-import routers from './routers';
 import dotenv from 'dotenv';
+import bodyparser from 'koa-bodyparser';
+import cors from '@koa/cors'
+import logger from 'koa-logger';
+import routers from './routers';
+
 dotenv.config();
 
-const connect = mongoose.connect(process.env.DATABASE_URL, { keepAlive: 120, useNewUrlParser: true, useUnifiedTopology: true });
-
+// 连接数据库
+const connect = mongoose.connect(process.env.DATABASE_URL, {
+   keepAlive: 1200, 
+   useNewUrlParser: true, 
+   useUnifiedTopology: true 
+});
 connect.then(() => {
-  console.log('mongoose has Connected')
+  console.log('mongoose has Connected');
 }, (err) => { console.log(err); });
 
-const app = new Koa()
+// 使用中间件
+const app = new Koa();
 app.use(cors());
 app.use(bodyparser());
+app.use(logger());
+app.use(routers());
 
-app.use(routers.routes())
-  .use(routers.allowedMethods())
-
+// 处理异常
 app.on('error', (err, ctx) => {
   if (process.env.NODE_ENV != 'test') {
     console.log('sent error %s to the cloud', err.message);
@@ -34,20 +36,29 @@ app.on('error', (err, ctx) => {
     code: ctx.status,
     msg: err.message,
   };
-});
+}); 
 
+// 处理正常请求返回
 app.on('success', (result, ctx) => {
+  console.log('********success', result);
   ctx.message = 'sucess';
   ctx.status = 200;
   const { code, msg, resultData } = result;
-  ctx.body = {
+
+  const payload = {
     uri: ctx.url,
     code: code ? code : ctx.response.status,
     msg: msg ? msg : ctx.response.message,
-    result: resultData || null
-  };
+    result: resultData
+  }
+
+  if(Array.isArray(result)) {
+    payload.result = result || []
+  }
+
+  ctx.body = payload;
 });
 
 app.listen(8088, () => {
-  console.log('run in borswer http://localhost:8088')
+  console.log('run in borswer http://localhost:8088');
 });

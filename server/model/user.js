@@ -18,7 +18,7 @@ const verifyCodeSchema = new Schema({
   timestamps: true
 })
 
-export const VerifyCodeSchema = mongoose.model('User_registers', verifyCodeSchema)
+export const VerifyCodeModel = mongoose.model('User_registers', verifyCodeSchema)
 
 const signUpSchema = new Schema({
   email: {
@@ -31,12 +31,9 @@ const signUpSchema = new Schema({
   },
   verifyCode: {
     type: String,
-    required: true
   } 
 }, {
   timestamps: true
 })
 
-export const SignUpSchema = mongoose.model('User_Signup', signUpSchema)
-
-
+export const SignUpModel = mongoose.model('User_Signup', signUpSchema)

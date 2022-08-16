@@ -3,24 +3,30 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.18.10",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/polyfill": "^7.8.3",
-    "@babel/preset-env": "^7.8.6",
+    "@babel/preset-env": "^7.18.10",
     "@babel/preset-react": "^7.8.3",
-    "@babel/register": "^7.8.6",
+    "@babel/register": "7.8.6",
+    "@koa/cors": "^3.3.0",
     "babel-plugin-import": "^1.13.0",
     "babel-plugin-webpack-alias": "^2.1.2",
     "dotenv": "^8.2.0",
+    "invariant": "^2.2.4",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.11.0",
     "koa-body": "^4.1.1",
     "koa-bodyparser": "^4.2.1",
+    "koa-combine-routers": "^4.0.2",
     "koa-cors": "^0.0.16",
+    "koa-logger": "^3.2.1",
     "koa-redis": "^4.0.1",
     "koa-router": "^8.0.8",
     "koa-session": "^5.13.1",
     "koa-static": "^5.0.0",
     "koa-views": "^6.2.1",
+    "levenary": "^1.1.1",
     "mongodb": "^3.5.4",
     "mongoose": "^5.9.5",
     "nodemailer": "^6.4.5",
@@ -29,7 +35,7 @@
     "serverless-tencent-scf": "^0.1.36"
   },
   "scripts": {
-    "start": "nodemon server/index.js",
+    "start": "nodemon index.js",
     "start:db": "mongod --dbpath=/usr/local/var/mongodb"
   }
 }

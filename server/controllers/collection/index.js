@@ -1,11 +1,10 @@
 import CollectionServer from '../../services/collection'
-import { CollectionSchema } from '../../model/collection';
-
+import { CollectionModel } from '../../model/collection';
 
 const CollectionController = {
   getData: async (ctx) => {
     try {
-      let result = await CollectionSchema.find({});
+      let result = await CollectionModel.find({});
       ctx.app.emit('success', result, ctx);
     } catch (err) {
       ctx.app.emit('error', err, ctx);
@@ -13,7 +12,7 @@ const CollectionController = {
   },
   insert: async (ctx) => {
     try {
-      let result = await CollectionSchema.create({
+      let result = await CollectionModel.create({
         ...ctx.request.body
       })
       ctx.app.emit('success', result, ctx);
@@ -22,13 +21,20 @@ const CollectionController = {
     }
   },
   queryList: async (ctx) => {
+    // try {
+    //   let data = await CollectionServer.queryBookMarkList(ctx.request.body);
+    //   console.log("********queryList result", data);
+    //   data && ctx.app.emit('success', data, ctx);
+    // } catch (err) {
+    //   ctx.app.emit('error', err, ctx);
+    // }
+
     try {
-      let data = await CollectionServer.queryBookMarkList(ctx.request.body);
-      data && ctx.app.emit('success', data, ctx);
+      let result = await CollectionModel.find({});
+      ctx.app.emit('success', result, ctx);
     } catch (err) {
       ctx.app.emit('error', err, ctx);
     }
-
   },
 }
 

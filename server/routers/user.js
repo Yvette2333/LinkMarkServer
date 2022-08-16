@@ -1,16 +1,11 @@
-/**
- * @Author: yuwei 
- * @Date: 2020-03-14 22:30:56 
- * @description /user/*
- * @Last Modified by: yuwei
- * @Last Modified time: 2020-03-26 22:09:33
- */
 import Router from 'koa-router';
 import UserController from '../controllers/user';
 
-const router = Router();
+const UserRouter = new Router();
+UserRouter.prefix('/user');
 
-router.post('/verifyCode',UserController.verifyCode)
-router.post('/signUp',UserController.signUp)
+UserRouter.post('/verifyCode',UserController.verifyCode);
+UserRouter.post('/signUp',UserController.signUp);
+UserRouter.post('/signIn',UserController.signIn);
 
-export default router
+export default UserRouter;

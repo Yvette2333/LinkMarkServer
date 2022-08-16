@@ -1,11 +1,42 @@
 # Link Mark Server
-服务于Link Mark Client 的node服务,使用koa框架搭建。
+服务于Link Mark Client 的node服务, 使用koa框架搭建。
 
-项目亮点
-- nodemon，开发环境热加载
-- 服务端es6语法支持，使用 @babel-polyfill @babel-register @babel/preset-env 使服务端支持es6语法
-- 链接远程mongodb数据库
-- 安全防范（暂未实现）
+This LinkMark include the following features:
+- ✅ Using `nodemon` Development environment hot load.
+- ✅ Support `ES6` syntax, Using `@babel-polyfill` `@babel-register` `@babel/preset-env`.
+- ✅ Connect `Mongodb` Database.
+- ✅ Using `ejs` for Email Template.
+- ⭕️ API documentation based on JSDoc.
+- ⭕️ 安全防范
   csrf  
     set-Cookies :  ... , same-site 
     referer
+------
+
+# Gettiing Stared
+
+```
+# Download node_modules
+$ yarn
+
+# Run DataBase
+$ yarn start:db
+
+# Run normally
+$ yarn start
+```
+
+
+# Before DEV
+Change file name `.env.example` to `.env`, and change the environment variables in the file。
+```
+# MAIL
+MAIL_USER=<username@email.com>
+MAIL_SMTP=<email_smtp>
+
+# DATABASE CONNECT LINK
+DATABASE_URL= 'mongodb+srv://<username>:<password>@xxxx.mongodb.net/?retryWrites=true&w=majority'
+
+# secret key
+TOKENSECRET= <youself_token_code>
+```

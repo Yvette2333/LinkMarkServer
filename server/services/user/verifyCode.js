@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import MailerTmp from '../../assets/tpl/mailer';
-import { VerifyCodeSchema, SignUpSchema } from '../../model/user';
+import { VerifyCodeModel, SignUpModel } from '../../model/user';
 
 
 export default class Mailer {
@@ -16,8 +16,8 @@ export default class Mailer {
   queryOne = () => {
     //TODO： 验证该用户是否已注册
     return Promise.all([
-      SignUpSchema.findOne({ email: this.email }),
-      VerifyCodeSchema.findOne({ email: this.email })
+      SignUpModel.findOne({ email: this.email }),
+      VerifyCodeModel.findOne({ email: this.email })
     ]).then((data) => {
       console.log('datadatadatadata', data)
       const [isRegister, hasVerifyCode] = data;
@@ -26,20 +26,6 @@ export default class Mailer {
       }
       return hasVerifyCode
     })
-
-    // if (noRegister) {
-    //   return VerifyCodeSchema.findOne({ email: this.email }, (err, docs) => {
-    //     console.log('验证码是否存在')
-    //     if (err) { throw Error(err) }
-    //     if (docs) { 
-    //       this.docs = docs;
-    //     }
-    //   })
-    // }else {
-    //   return noRegister
-    // }
-
-
 
   }
 
@@ -140,7 +126,7 @@ export default class Mailer {
   //✅ 存储当前email的相关信息 
   saveExpireToContainer = (verifyCode) => {
     // 以email 来进行查找当前是否存在注册信息
-    VerifyCodeSchema.findOneAndUpdate({ email: this.email }).exec((err, docs) => {
+    VerifyCodeModel.findOneAndUpdate({ email: this.email }).exec((err, docs) => {
       if (err) throw Error(err);
       // 如果存在则更改当前 verifyCode
       if (docs) {
@@ -153,7 +139,7 @@ export default class Mailer {
       } else {
         // 不存在 新增email + verifyCode
         console.log('has insert email', this.email)
-        VerifyCodeSchema.create({
+        VerifyCodeModel.create({
           expireTime: Date.now() + 60000, // 禁止重复获取时间
           email: this.email, // user
           verifyCode, // 验证码

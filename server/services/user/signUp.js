@@ -1,4 +1,4 @@
-import { SignUpSchema } from '../../model/user';
+import { SignUpModel } from '../../model/user';
 import Mailer from './verifyCode';
 
 
@@ -43,7 +43,7 @@ export default class SignUp extends Mailer {
         msg: "验证码填写错误！"
       }
     }
-    return SignUpSchema.create({
+    return SignUpModel.create({
         email: this.email, // user
         password: this.password, // 验证码
         verifyCode: this.registerVerifyCode,

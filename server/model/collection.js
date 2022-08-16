@@ -20,4 +20,4 @@ const collectionSchema = new Schema({
   timestamps:true
 })
 
-export const CollectionSchema = mongoose.model('Koa' ,collectionSchema)
+export const CollectionModel = mongoose.model('LinkMark_List' ,collectionSchema)

@@ -1,22 +1,14 @@
-// import DBClient from '../module/db';
-
-// const DB = DBClient.getInstance();
+import CollectionModel from '../model/collection';
 
 const CollectionServer = { 
-  /**
-   * @direction 新增local.LinkMark数据表
-   */
-  // insertBookMark(json){
-  //   let result = DB.insert('LinkMark',json)
-  //   return result
-  // },
-  // queryBookMarkList(){
-  //   let result = DB.find('LinkMark',{})
-  //   return result
-  // },
-  // queryData(json){
-  //   let result = DB.find('koa',json)
-  //   return result
-  // }
+   async insertBookMark(json){
+    return await CollectionModel.insert(json);
+  },
+  async queryBookMarkList(){
+    return await CollectionModel.find({});
+  },
+  async queryData(json){
+    return await CollectionModel.find(json);
+  }
 }
 export default CollectionServer

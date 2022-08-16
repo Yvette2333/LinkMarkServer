@@ -4,7 +4,7 @@
  */
 import nodemailer from 'nodemailer';
 import MailerTmp from '../assets/tpl/mailer';
-import { VerifyCodeSchema } from '../model/user';
+import { VerifyCodeModel } from '../model/user';
 
 export default class Mailer {
 
@@ -17,7 +17,7 @@ export default class Mailer {
   }
 
   queryOne = () => {
-    return new Promise((resolve, reject) => VerifyCodeSchema.findOne({ email: this.email }, (err, docs) => {
+    return new Promise((resolve, reject) => VerifyCodeModel.findOne({ email: this.email }, (err, docs) => {
       if (err) { reject(err) }
       if (docs) {
         this.docs = docs;
@@ -111,7 +111,7 @@ export default class Mailer {
   //✅ 存储当前email的相关信息 
   saveExpireToContainer = (verifyCode) => {
     // 以email 来进行查找当前是否存在注册信息
-    VerifyCodeSchema.findOneAndUpdate({ email: this.email }).exec((err, docs) => {
+    VerifyCodeModel.findOneAndUpdate({ email: this.email }).exec((err, docs) => {
       if (err) throw Error(err);
       // 如果存在则更改当前 verifyCode
       if (docs) {
@@ -124,7 +124,7 @@ export default class Mailer {
       } else {
         // 不存在 新增email + verifyCode
         console.log('has insert email', email)
-        return VerifyCodeSchema.create({
+        return VerifyCodeModel.create({
           expireTime: Date.now() + 60000, // 禁止重复获取时间
           email: this.email, // user
           verifyCode, // 验证码
